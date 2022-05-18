@@ -17,9 +17,9 @@ print(response.data)
 # In this case, the data field of the Response returned is a list of Tweet
 # objects
 tweets = response.data
-for tweet in tweepy.Cursor(api.user_timeline, screen_name='predictivehacks', tweet_mode="extended").items():
-    text = tweet._json["full_text"]
-    print(text)
+#for tweet in tweepy.Cursor(.userapi_timeline, screen_name='predictivehacks', tweet_mode="extended").items():
+    #text = tweet._json["full_text"]
+    #print(text)
 # Each Tweet object has default ID and text fields
 for tweet in tweets:
     print(tweet.id)

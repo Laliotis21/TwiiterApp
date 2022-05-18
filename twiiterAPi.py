@@ -95,7 +95,7 @@ def twitter_method(query, next_token):
             'description': user.description,
             "entities": user.entities,
             'country': user.location,
-            #'reweet': retweet_count
+            #'reweet': retweet_count 
             
         }
         tweet_info_ls.append(tweet_info)
