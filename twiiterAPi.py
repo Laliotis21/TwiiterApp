@@ -15,12 +15,12 @@ def twitter_method(query, next_token):
     if not next_token:
 
         tweets = client.search_recent_tweets(query=query,
-                                             tweet_fields=[
-                                                 "created_at", "text", "source", "geo","entities", 'lang'],
+                                             tweet_fields=['attachments','author_id','context_annotations','conversation_id','created_at','entities','geo','id','in_reply_to_user_id','lang','possibly_sensitive','public_metrics','referenced_tweets','reply_settings','source','text','withheld'],
                                              user_fields=[
-                                                 "name", "username", "location", "verified", "description", "entities", "id"],
-                                             place_fields=["country", "geo"],
+                                                 'created_at','description','entities','id','location','name','pinned_tweet_id','profile_image_url','protected,public_metrics','url','username','verified','withheld'],
+                                             place_fields=['contained_within','country','country_code','full_name','geo,id','name','place_type'],
                                              max_results=10,
+                                             media_fields= ['media_key','non_public_metrics'],
                                              expansions='author_id'
                                              )
 
@@ -28,11 +28,12 @@ def twitter_method(query, next_token):
         tweets = client.search_recent_tweets(query=query,
                                              next_token=["next_token"],
                                              tweet_fields=[
-                                                  "created_at", "id","text", "source", "geo","entities", 'lang'],
+                                                  'attachments','author_id','context_annotations','conversation_id','created_at','entities','geo','id','in_reply_to_user_id','lang','possibly_sensitive','public_metrics','referenced_tweets','reply_settings','source','text','withheld'],
                                              user_fields=[
-                                                 "name", "username", "location", "verified", "description", "entities", "id"],
+                                                 "name", "username", "location", "verified", "description", "entities", "id",'public_metrics','media'],
                                              place_fields=["country", "geo"],
-                                             max_results=10
+                                             max_results=10,
+                                             expansions='author_id'
                                              )
 
     
