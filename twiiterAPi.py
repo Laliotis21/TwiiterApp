@@ -18,22 +18,22 @@ def twitter_method(query, next_token):
                                              tweet_fields=['attachments','author_id','context_annotations','conversation_id','created_at','entities','geo','id','in_reply_to_user_id','lang','possibly_sensitive','public_metrics','referenced_tweets','reply_settings','source','text','withheld'],
                                              user_fields=[
                                                  'created_at','description','entities','id','location','name','pinned_tweet_id','profile_image_url','protected,public_metrics','url','username','verified','withheld'],
-                                             place_fields=['contained_within','country','country_code','full_name','geo,id','name','place_type'],
+                                             place_fields=['contained_within','country','country_code','full_name','geo','id','name','place_type'],
                                              max_results=10,
-                                             media_fields= ['media_key','non_public_metrics'],
-                                             expansions='author_id'
+                                             media_fields= ['alt_text','duration_ms','height','media_key','non_public_metrics','organic_metrics','preview_image_url','promoted_metrics','public_metrics','type','url','variants','width'],
+                                             expansions=['author_id','attachments.media_keys','geo.place_id']
                                              )
 
     else:
         tweets = client.search_recent_tweets(query=query,
                                              next_token=["next_token"],
-                                             tweet_fields=[
-                                                  'attachments','author_id','context_annotations','conversation_id','created_at','entities','geo','id','in_reply_to_user_id','lang','possibly_sensitive','public_metrics','referenced_tweets','reply_settings','source','text','withheld'],
+                                             tweet_fields=['attachments','author_id','context_annotations','conversation_id','created_at','entities','geo','id','in_reply_to_user_id','lang','possibly_sensitive','public_metrics','referenced_tweets','reply_settings','source','text','withheld'],
                                              user_fields=[
-                                                 "name", "username", "location", "verified", "description", "entities", "id",'public_metrics','media'],
-                                             place_fields=["country", "geo"],
+                                                 'created_at','description','entities','id','location','name','pinned_tweet_id','profile_image_url','protected,public_metrics','url','username','verified','withheld'],
+                                             place_fields=['contained_within','country','country_code','full_name','geo','id','name','place_type'],
                                              max_results=10,
-                                             expansions='author_id'
+                                             media_fields= ['alt_text','duration_ms','height','media_key','non_public_metrics','organic_metrics','preview_image_url','promoted_metrics','public_metrics','type','url','variants','width'],
+                                             expansions=['author_id','attachments.media_keys','geo.place_id']
                                              )
 
     
@@ -62,6 +62,7 @@ def twitter_method(query, next_token):
             'description': user.description,
             "entities": user.entities,
             'country': user.location
+            #'media': media.media_key
             #'reweet': retweet_count 
             
         }
