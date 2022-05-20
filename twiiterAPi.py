@@ -56,14 +56,18 @@ def twitter_method(query, next_token):
             'source':	tweet.source,
             'text':	tweet.text,
             'name': user.name,
+            'retweet_count': tweet.get('public_metrics',{}).get('retweet_count',[]),
+            'like_count': tweet.get('public_metrics',{}).get('like_count',[]),
+            'user_followers_count':user.get('public_metrics',{}).get('followers_count',[]),
+            'user_following_count':user.get('public_metrics',{}).get('following_count',[]),
+            'tweet_user_count':user.get('public_metrics',{}).get('tweet_count',[]),
+            'user_id': user.id,
             'username': user.username,
             'location': user.location,
             'verified': user.verified,
             'description': user.description,
             "entities": user.entities,
             'country': user.location
-            #'media': media.media_key
-            #'reweet': retweet_count 
             
         }
         tweet_info_ls.append(tweet_info)
@@ -71,7 +75,7 @@ def twitter_method(query, next_token):
     tweets_df = pd.DataFrame(tweet_info_ls)
 
     # save dataset
-    tweets_df.to_csv('c:\\temp\\file2.csv', header=False, index=True, mode='a')
+    tweets_df.to_csv('c:\\temp\\file2.csv', header=True, index=True, mode='a')
     
     return tweets.meta["next_token"]
 
