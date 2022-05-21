@@ -39,7 +39,7 @@ def twitter_method(query, next_token):
                                              )
 
     
-    #print(len(tweets.includes["users"]))
+
 
     tweet_info_ls = []
     tweets_df = pd.DataFrame(tweet_info_ls)
@@ -74,14 +74,11 @@ def twitter_method(query, next_token):
             
         }
         tweet_info_ls.append(tweet_info)
-    # create dataframe from the extracted records
-    #tweets_df = pd.DataFrame(tweet_info_ls)
 
     # save dataset
-    #tweets_df.to_json('c:\\temp\\file2.json',  index=True, mode='a')
+    
     for tweet in tweet_info_ls:
                 with open("results.json", "a" ) as f:
-                    # Here we are writing 1 Tweet object JSON per line
                     f.write(json.dumps(tweet, indent=4, sort_keys=True, default=str) + "\n")
     return tweets.meta["next_token"]
 
