@@ -87,9 +87,9 @@ MY_BEARER_TOKEN = bearer_token
 # create your client
 client = tweepy.Client(bearer_token=MY_BEARER_TOKEN)
 
-next_token = twitter_method("nba", "")
+next_token = twitter_method("ChampionsLeague final", "")
 
 while(True):
-    next_token = twitter_method("nba", "")
+    next_token = twitter_method("ChampionsLeague final", "")
 
     time.sleep(300)
