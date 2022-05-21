@@ -1,3 +1,5 @@
+import json
+from msilib.schema import SelfReg
 from numpy import place
 import pandas as pd
 from dateutil.relativedelta import relativedelta
@@ -19,7 +21,7 @@ def twitter_method(query, next_token):
                                              user_fields=[
                                                  'created_at','description','entities','id','location','name','pinned_tweet_id','profile_image_url','protected,public_metrics','url','username','verified','withheld'],
                                              place_fields=['contained_within','country','country_code','full_name','geo','id','name','place_type'],
-                                             max_results=10,
+                                             max_results=100,
                                              media_fields= ['alt_text','duration_ms','height','media_key','non_public_metrics','organic_metrics','preview_image_url','promoted_metrics','public_metrics','type','url','variants','width'],
                                              expansions=['author_id','attachments.media_keys','geo.place_id']
                                              )
@@ -31,7 +33,7 @@ def twitter_method(query, next_token):
                                              user_fields=[
                                                  'created_at','description','entities','id','location','name','pinned_tweet_id','profile_image_url','protected,public_metrics','url','username','verified','withheld'],
                                              place_fields=['contained_within','country','country_code','full_name','geo','id','name','place_type'],
-                                             max_results=10,
+                                             max_results=100,
                                              media_fields= ['alt_text','duration_ms','height','media_key','non_public_metrics','organic_metrics','preview_image_url','promoted_metrics','public_metrics','type','url','variants','width'],
                                              expansions=['author_id','attachments.media_keys','geo.place_id']
                                              )
@@ -67,16 +69,20 @@ def twitter_method(query, next_token):
             'verified': user.verified,
             'description': user.description,
             "entities": user.entities,
-            'country': user.location
+            'country': user.location,
+            'tweet_context_annotations': None if tweet.context_annotations is None else [o.get('domain') for o in tweet.get('context_annotations',{})]
             
         }
         tweet_info_ls.append(tweet_info)
     # create dataframe from the extracted records
-    tweets_df = pd.DataFrame(tweet_info_ls)
+    #tweets_df = pd.DataFrame(tweet_info_ls)
 
     # save dataset
-    tweets_df.to_csv('c:\\temp\\file2.csv', header=True, index=True, mode='a')
-    
+    #tweets_df.to_json('c:\\temp\\file2.json',  index=True, mode='a')
+    for tweet in tweet_info_ls:
+                with open("results.json", "a" ) as f:
+                    # Here we are writing 1 Tweet object JSON per line
+                    f.write(json.dumps(tweet, indent=4, sort_keys=True, default=str) + "\n")
     return tweets.meta["next_token"]
 
 # your bearer token
@@ -86,7 +92,7 @@ client = tweepy.Client(bearer_token=MY_BEARER_TOKEN)
 
 next_token = twitter_method("nba", "")
 
-# while(True):
-next_token = twitter_method("nba", "")
+while(True):
+    next_token = twitter_method("nba", "")
 
-# time.sleep(2100)
+    time.sleep(300)
